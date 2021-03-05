@@ -1,7 +1,7 @@
-Paysim_Credit_Fraud_Analysis
+Paysim Credit Fraud Analysis
 ==============================
 
-In this project, I will be building a credit fraud detector that will (ideally) outperform the previous predictor used to make predictions on this dataset.
+In this project, I will be building a credit fraud detector that will (ideally) outperform the previous predictor used to make predictions on this dataset. Raw data can be found on [Kaggle](https://www.kaggle.com/ntnu-testimon/paysim1).
 
 Project Organization
 ------------
