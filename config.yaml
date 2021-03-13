@@ -1,3 +1,3 @@
 data:
-  rawData: '/Users/ksharma/Documents/Data Science/Projects/paysim_credit_fraud_analysis/data/raw/RawCreditTransactionData.csv'
-  cleanedData: '/Users/ksharma/Documents/Data Science/Projects/paysim_credit_fraud_analysis/data/processed/CleanedCreditTransactionData.csv'
+  rawData: '/Users/ksharma/Documents/ML Engineer/Machine Learning/Projects/paysim_credit_fraud_analysis/data/raw/RawCreditTransactionData.csv'
+  cleanedData: '/Users/ksharma/Documents/ML Engineer/Machine Learning/Projects/paysim_credit_fraud_analysis/data/processed/CleanedCreditTransactionData.csv'
