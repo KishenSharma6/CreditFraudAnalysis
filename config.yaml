@@ -1,3 +1,4 @@
 paths:
   rawData: '/Users/ksharma/Documents/ML Engineer/Machine Learning/Projects/paysim_credit_fraud_analysis/data/raw/RawCreditTransactionData.csv'
   cleanedData: '/Users/ksharma/Documents/ML Engineer/Machine Learning/Projects/paysim_credit_fraud_analysis/data/processed/CleanedCreditTransactionData.csv'
+  pyScripts: '/Users/ksharma/Documents/ML Engineer/Machine Learning/Projects/paysim_credit_fraud_analysis/src'
