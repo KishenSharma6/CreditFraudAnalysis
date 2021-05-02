@@ -1,4 +1,4 @@
-from sklearn.metrics import accuracy_score, precision_score, recall_score, confusion_matrix, fbeta_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, confusion_matrix, fbeta_score, plot_confusion_matrix
 
 
 class Evaluation:
@@ -29,3 +29,6 @@ class Evaluation:
 
     def confusion_matrix(self):
         return confusion_matrix(self.actual, self.predictions)
+    
+    def confustion_matrix_plot(self, estimator):
+        pass
