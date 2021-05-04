@@ -3,6 +3,8 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier,
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
 from imblearn.over_sampling import SMOTE
+from sklearn.metrics import confusion_matrix, fbeta_score, make_scorer
+from sklearn.model_selection import cross_validate
 
 class Models:
     def __init__(self, data, target):
@@ -32,15 +34,39 @@ class Models:
         self.y_train
         self.y_test
 
+    def normalize_data(self):
+        pass
 
-    def initialize(self):
+    def base_model_evaluation(self):
         logReg= LogisticRegression(penalty='l2', C=1.0, random_state= 24)
-        ranForest= RandomForestClassifier(n_estimators= 100, random_state= 24,  )
+        ranForest= RandomForestClassifier(n_estimators= 100, random_state= 24)
+        gradBoost= GradientBoostingClassifier(random_state= 24)
+        adaBoost= AdaBoostClassifier(random_state= 24)
+        knn= KNeighborsClassifier(n_jobs= -1)
+        naiveBayes= GaussianNB()
+
+        models= [logReg, ranForest, gradBoost, adaBoost, knn, naiveBayes]
+        names= ['Logistic Regression', 'Random Forest', 'Gradient Boosting', 'ADA Boost', 'KNN', 'Naive Bayes']
+        scoring= {'Recall':'recall', 'F2': make_scorer(fbeta_score, beta= 2)}
+        
+        try:
+            for model, name in zip(models, names):
+                cv_results= cross_validate(estimator= model, X= self.X_train, y= self.y_train, 
+                                       cv= 5, scoring=scoring)
+                print('===========================')
+                print('%s Performance:\n' % (name))
+                print('Best CV Recall Score: %s F2 Score: %s' % (cv_results['test_Recall'], cv_results['test_F2']))
+                print('Average CV Recall Score: %s F2 Score: %s' % (cv_results['test_Recall'], cv_results['test_F2']))
+                print('Recall SD: %s F2 SDL %s' % (cv_results['test_Recall'], cv_results['test_F2']))
+                print('===========================')
+        except AttributeError:
+            print('ERROR. Object does not have train/test splits. Run method split_data() first.')
 
     def over_sampling(self):
         """Applies SMOTE's oversampling technique, prints the results of the transformation, and assigns
         transformed data to object.
         """
+        print('Be sure to add a type test')
         sm= SMOTE(random_state= 24)
         X_train_sm, y_train_sm= sm.fit_resample(self.X_train, y_train)
         print('Shape of X_train prior to SMOTE: %s' % (self.X_train.shape))
