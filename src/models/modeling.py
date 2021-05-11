@@ -1,10 +1,13 @@
 from sklearn.linear_model import LogisticRegression
+import pandas as pd
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, AdaBoostClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
 from imblearn.over_sampling import SMOTE
 from sklearn.metrics import confusion_matrix, fbeta_score, make_scorer
-from sklearn.model_selection import cross_validate
+from sklearn.model_selection import cross_validate, train_test_split
+from sklearn.preprocessing import StandardScaler
+
 
 class Models:
     def __init__(self, data, target):
@@ -29,13 +32,38 @@ class Models:
             test_size (float): % of data you would like to be reserved for the test set
         """
         X_train, X_test, y_train, y_test = train_test_split(self.data, self.target, random_state= 24, test_size= test_size)
-        self.X_train
-        self.X_test
-        self.y_train
-        self.y_test
+        self.X_train= X_train
+        self.X_test= X_test
+        self.y_train= y_train
+        self.y_test= y_test
 
-    def normalize_data(self):
-        pass
+    def standardize_data(self, cols):
+        """Standardize X_train and X_test of object
+
+        Args:
+            cols (List): List of columns that contain data you would like to apply StandardScaler() to.
+        """
+        try:
+            training_data= self.X_train.copy()
+            test_data= self.X_test.copy()
+            
+            training_to_transform= training_data[cols]
+            training_remainder= training_data.drop(cols, axis= 1)
+
+            test_to_transform= test_data[cols]
+            test_remainder= test_data.drop(cols, axis= 1)
+            
+            scaler= StandardScaler()
+            
+            X_train_transformed= scaler.fit_transform(training_to_transform)
+            X_test_transformed= scaler.transform(test_to_transform)
+            
+            self.X_train_transformed= pd.concat([pd.DataFrame(X_train_transformed), training_remainder])
+            self.X_test_transformed= pd.concat([pd.DataFrame(X_test_transformed),test_remainder])
+
+            print('X_train and X_test attributes have been successfully standardized')
+        except AttributeError:
+            print('ERROR Data needs to be split. Run method split_data on object')
 
     def base_model_evaluation(self):
         logReg= LogisticRegression(penalty='l2', C=1.0, random_state= 24)
