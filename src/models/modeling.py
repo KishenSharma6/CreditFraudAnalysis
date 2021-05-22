@@ -37,33 +37,33 @@ class Models:
         self.y_train= y_train
         self.y_test= y_test
 
-    def standardize_data(self, cols):
-        """Standardize X_train and X_test of object
+    # def standardize_data(self, cols):
+    #     """Standardize X_train and X_test of object
 
-        Args:
-            cols (List): List of columns that contain data you would like to apply StandardScaler() to.
-        """
-        try:
-            training_data= self.X_train.copy()
-            test_data= self.X_test.copy()
+    #     Args:
+    #         cols (List): List of columns that contain data you would like to apply StandardScaler() to.
+    #     """
+    #     try:
+    #         training_data= self.X_train.copy()
+    #         test_data= self.X_test.copy()
             
-            training_to_transform= training_data[cols]
-            training_remainder= training_data.drop(cols, axis= 1)
+    #         training_to_transform= training_data[cols]
+    #         training_remainder= training_data.drop(cols, axis= 1)
 
-            test_to_transform= test_data[cols]
-            test_remainder= test_data.drop(cols, axis= 1)
+    #         test_to_transform= test_data[cols]
+    #         test_remainder= test_data.drop(cols, axis= 1)
             
-            scaler= StandardScaler()
+    #         scaler= StandardScaler()
             
-            X_train_transformed= scaler.fit_transform(training_to_transform)
-            X_test_transformed= scaler.transform(test_to_transform)
+    #         X_train_transformed= scaler.fit_transform(training_to_transform)
+    #         X_test_transformed= scaler.transform(test_to_transform)
             
-            self.X_train_transformed= pd.concat([pd.DataFrame(X_train_transformed), training_remainder])
-            self.X_test_transformed= pd.concat([pd.DataFrame(X_test_transformed),test_remainder])
+    #         self.X_train_transformed= pd.concat([pd.DataFrame(X_train_transformed), training_remainder])
+    #         self.X_test_transformed= pd.concat([pd.DataFrame(X_test_transformed),test_remainder])
 
-            print('X_train and X_test attributes have been successfully standardized')
-        except AttributeError:
-            print('ERROR Data needs to be split. Run method split_data on object')
+    #         print('X_train and X_test attributes have been successfully standardized')
+    #     except AttributeError:
+    #         print('ERROR Data needs to be split. Run method split_data on object')
 
     def base_model_evaluation(self):
         logReg= LogisticRegression(penalty='l2', C=1.0, random_state= 24)
