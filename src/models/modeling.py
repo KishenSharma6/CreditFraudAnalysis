@@ -9,7 +9,7 @@ from sklearn.model_selection import cross_validate, train_test_split
 from sklearn.preprocessing import StandardScaler
 
 
-class Models:
+class Data:
     def __init__(self, data, target):
         self.data= data
         self.target= target
@@ -36,6 +36,35 @@ class Models:
         self.X_test= X_test
         self.y_train= y_train
         self.y_test= y_test
+
+
+class Models:
+    def __init__(self, data, target):
+        self.data= data
+        self.target= target
+    
+    # def sample_data(self, n):
+    #     """Create sample of initial data for testing purposes
+
+    #     Args:
+    #         n (integer): Number of random rows to generate.
+        
+    #     Returns: Dataframe containing sample from data
+
+    #     """
+    #     return self.data.sample(n=n)
+
+    # def split_data(self, test_size):
+    #     """Split data into training/test sets and assigns them to object
+
+    #     Args:
+    #         test_size (float): % of data you would like to be reserved for the test set
+    #     """
+    #     X_train, X_test, y_train, y_test = train_test_split(self.data, self.target, random_state= 24, test_size= test_size)
+    #     self.X_train= X_train
+    #     self.X_test= X_test
+    #     self.y_train= y_train
+    #     self.y_test= y_test
 
     # def standardize_data(self, cols):
     #     """Standardize X_train and X_test of object
@@ -66,6 +95,8 @@ class Models:
     #         print('ERROR Data needs to be split. Run method split_data on object')
 
     def base_model_evaluation(self):
+        # There's too much mess here. Make models, names, and scoring parameters so 
+        # you can manupulate
         logReg= LogisticRegression(penalty='l2', C=1.0, random_state= 24)
         ranForest= RandomForestClassifier(n_estimators= 100, random_state= 24)
         gradBoost= GradientBoostingClassifier(random_state= 24)
