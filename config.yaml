@@ -6,7 +6,6 @@ paths:
   home: '/Users/ksharma/Documents/ML Engineer/Machine Learning/Projects/paysim_credit_fraud_analysis/'
   models: '/Users/ksharma/Documents/ML Engineer/Machine Learning/Projects/paysim_credit_fraud_analysis/models/'
 machineLearning:
-  baseModels: [LogisticRegression(), RandomForestClassifier(), GradientBoostingClassifier(), AdaBoostClassifier(), KNeighborsClassifier(), GaussianNB()]
   hyperparameters: pass
   
 
