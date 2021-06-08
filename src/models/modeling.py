@@ -5,8 +5,6 @@ from sklearn.model_selection import cross_validate, train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 
-
-
 class Data:
     def __init__(self, data, target):
         self.data= data
@@ -28,7 +26,8 @@ class Data:
         return self.data_sample.describe()
 
     def split_data(self, test_size):
-        """Split data into training/test sets and assigns them to object
+        """Split data into training/test sets and assigns them to object. Print X_train, y_train, X_test,
+        y_test shapes
 
         Args:
             test_size (float): % of data you would like to be reserved for the test set
@@ -38,7 +37,9 @@ class Data:
         self.X_test= X_test
         self.y_train= y_train
         self.y_test= y_test
+        
 
+    
     def over_sampling(self):
         """Applies SMOTE's oversampling technique, prints the results of the transformation, and assigns
         transformed data to object.
@@ -70,47 +71,12 @@ class Models:
         for model, name in zip(models, names):
             clf= Pipeline(steps=[('preprocessor', preprocessor),
                                  ('classifier', model)])
-            cv_results= cross_validate(estimator= model, X= self.X_train, y= self.y_train, 
+            cv_results= cross_validate(estimator= clf, X= self.X_train, y= self.y_train, 
                                        cv= 5, scoring=scoring)
             return cv_results
             
             
-            # print('===========================')
-            # print('%s Performance:\n' % (name))
-            # print('Best CV Recall Score: %s F2 Score: %s' % (cv_results['test_Recall'], cv_results['test_F2']))
-            # print('Average CV Recall Score: %s F2 Score: %s' % (cv_results['test_Recall'], cv_results['test_F2']))
-            # print('Recall SD: %s F2 SDL %s' % (cv_results['test_Recall'], cv_results['test_F2']))
-            # print('===========================')
-        
-       
-
-    
-    # def base_model_evaluation(self):
-        # # There's too much mess here. Make models, names, and scoring parameters so 
-        # # you can manupulate
-        # logReg= LogisticRegression(penalty='l2', C=1.0, random_state= 24)
-        # ranForest= RandomForestClassifier(n_estimators= 100, random_state= 24)
-        # gradBoost= GradientBoostingClassifier(random_state= 24)
-        # adaBoost= AdaBoostClassifier(random_state= 24)
-        # knn= KNeighborsClassifier(n_jobs= -1)
-        # naiveBayes= GaussianNB()
-
-        # models= [logReg, ranForest, gradBoost, adaBoost, knn, naiveBayes]
-        # names= ['Logistic Regression', 'Random Forest', 'Gradient Boosting', 'ADA Boost', 'KNN', 'Naive Bayes']
-        # scoring= {'Recall':'recall', 'F2': make_scorer(fbeta_score, beta= 2)}
-        
-        # try:
-        #     for model, name in zip(models, names):
-        #         cv_results= cross_validate(estimator= model, X= self.X_train, y= self.y_train, 
-        #                                cv= 5, scoring=scoring)
-        #         print('===========================')
-        #         print('%s Performance:\n' % (name))
-        #         print('Best CV Recall Score: %s F2 Score: %s' % (cv_results['test_Recall'], cv_results['test_F2']))
-        #         print('Average CV Recall Score: %s F2 Score: %s' % (cv_results['test_Recall'], cv_results['test_F2']))
-        #         print('Recall SD: %s F2 SDL %s' % (cv_results['test_Recall'], cv_results['test_F2']))
-        #         print('===========================')
-        # except AttributeError:
-        #     print('ERROR. Object does not have train/test splits. Run method split_data() first.')
+           
 
     def confustion_matrix_plot(self, estimator):
         #for each iteration of initialize, print out a confusion matrix for the base models
