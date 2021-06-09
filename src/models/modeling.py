@@ -1,38 +1,50 @@
 import pandas as pd
 from imblearn.over_sampling import SMOTE
+from scipy.sparse.construct import random
 from sklearn.metrics import confusion_matrix, fbeta_score, make_scorer
 from sklearn.model_selection import cross_validate, train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 
 class Data:
-    def __init__(self, data, target):
+    def __init__(self, data):
         self.data= data
-        self.target= target
     
-    def sample_data(self, n):
+    def sample_data(self, fraction, replace=False, random_state=None,):
         """Create sample of initial data for testing purposes
 
         Args:
-            n (integer): Number of random rows to generate.
-        
+            fraction: Float value, Returns (float value * length of data frame values ). frac cannot be used with n.
+            replace: Boolean value, return sample with replacement if True.
+            random_state: int value or numpy.random.RandomState, optional. if set to a particular integer, will return 
+            same rows as sample in every iteration.
+
         Returns: Dataframe containing sample from data
 
         """
-        self.data_sample= self.data.sample(n=n)
-    
+        self.data_sample= self.data.sample(frac= fraction, replace= replace, random_state= random_state)
+        return self.data_sample
+        
     def about_sample(self):
         assert hasattr(self, 'data_sample')== True, "Object does not have sample data. Use method data_sample()"
         return self.data_sample.describe()
 
-    def split_data(self, test_size):
+    def split_data(self, target, test_size):
         """Split data into training/test sets and assigns them to object. Print X_train, y_train, X_test,
         y_test shapes
 
         Args:
-            test_size (float): % of data you would like to be reserved for the test set
+            target (string): column name containing target/label
+
+            test_size float or int, default=None
+                If float, should be between 0.0 and 1.0 and represent the proportion
+                of the dataset to include in the test split. If int, represents the
+                absolute number of test samples.
         """
-        X_train, X_test, y_train, y_test = train_test_split(self.data, self.target, random_state= 24, test_size= test_size)
+        y= self.data.loc[:, target]
+        X= self.data.drop(columns= target, axis= 1)
+
+        X_train, X_test, y_train, y_test = train_test_split(X, y, random_state= 24, test_size= test_size)
         self.X_train= X_train
         self.X_test= X_test
         self.y_train= y_train
